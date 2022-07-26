@@ -3,7 +3,7 @@ from unittest.mock import Base
 from uuid import UUID
 from datetime import date
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 # Pydantic
 from pydantic import BaseModel
@@ -12,6 +12,7 @@ from pydantic import Field
 
 # FastAPI
 from fastapi import FastAPI
+from fastapi import status
 
 app = FastAPI()
 
@@ -27,7 +28,7 @@ class UserLogin(UserBase):
         min_length=8,
         max_length=64
     )
-    
+
 class User(UserBase):
     firs_name: str = Field(
         ...,
@@ -52,6 +53,72 @@ class Tweet(BaseModel):
     update_at: Optional[datetime] = Field(default=None)
     by: User = Field(...)
 
-@app.get(path = '/')
+# Path Operations
+
+@app.get(path = '/', tags=["Home"])
 def home():
     return {'Twitter API': 'Working!'}
+
+## Users
+
+@app.post(
+    path="/signup",
+    response_model=User,
+    status_code=status.HTTP_201_CREATED,
+    summary="Register a User",
+    tags=["User"]
+)
+def singnup():
+    pass
+
+@app.post(
+    path="/login",
+    response_model=User,
+    status_code=status.HTTP_200_OK,
+    summary="Login a User",
+    tags=["User"]
+)
+def login():
+    pass
+
+@app.get(
+    path="/users",
+    response_model=List[User],
+    status_code=status.HTTP_200_OK,
+    summary="Show all User",
+    tags=["User"]
+)
+def show_all_user():
+    pass
+
+@app.get(
+    path="/Users/{user_id}",
+    response_model=User,
+    status_code=status.HTTP_200_OK,
+    summary="Show a User",
+    tags=["User"]
+)
+def show_a_user():
+    pass
+
+@app.delete(
+    path="/users/{user_id}/delete",
+    response_model=User,
+    status_code=status.HTTP_200_OK,
+    summary="Delete a User",
+    tags=["User"]
+)
+def delete_a_user():
+    pass
+
+@app.put(
+    path="/users/{user_id}/update",
+    response_model=User,
+    status_code=status.HTTP_200_OK,
+    summary="Update a User",
+    tags=["User"]
+)
+def update_a_user():
+    pass
+
+## Tweets
