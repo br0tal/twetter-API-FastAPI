@@ -1,5 +1,5 @@
 # Python
-from unittest.mock import Base
+import json
 from uuid import UUID
 from datetime import date
 from datetime import datetime
@@ -13,6 +13,7 @@ from pydantic import Field
 # FastAPI
 from fastapi import FastAPI
 from fastapi import status
+from fastapi import Body
 
 app = FastAPI()
 
@@ -24,13 +25,13 @@ class UserBase(BaseModel):
 
 class UserLogin(UserBase):
     password: str = Field(
-        ...,
+        ..., 
         min_length=8,
         max_length=64
     )
 
 class User(UserBase):
-    firs_name: str = Field(
+    first_name: str = Field(
         ...,
         min_length=1,
         max_length=50
@@ -40,7 +41,7 @@ class User(UserBase):
         min_length=1,
         max_length=50
     )
-    birt_date: Optional[date] = Field(default=None)
+    birth_date: Optional[date] = Field(default=None)
 
 class UserRegister(User):
     password: str = Field(
@@ -52,8 +53,8 @@ class UserRegister(User):
 class Tweet(BaseModel):
     tweet_id: UUID = Field(...)
     content: str = Field(
-        ...,
-        min_length=1,
+        ..., 
+        min_length=1, 
         max_length=256
     )
     created_at: datetime = Field(default=datetime.now())
@@ -70,7 +71,7 @@ class Tweet(BaseModel):
     response_model=User,
     status_code=status.HTTP_201_CREATED,
     summary="Register a User",
-    tags=["User"]
+    tags=["Users"]
 )
 def signup(user: UserRegister = Body(...)): 
     """
@@ -89,6 +90,16 @@ def signup(user: UserRegister = Body(...)):
         - last_name: str
         - birth_date: datetime
     """
+    with open("users.json", "r+", encoding="utf-8") as f: 
+        results = json.loads(f.read())
+        user_dict = user.dict()
+        user_dict["user_id"] = str(user_dict["user_id"])
+        user_dict["birth_date"] = str(user_dict["birth_date"])
+        results.append(user_dict)
+        f.seek(0)
+        f.write(json.dumps(results))
+        return user
+
 
 ### Login a user
 @app.post(
@@ -96,42 +107,42 @@ def signup(user: UserRegister = Body(...)):
     response_model=User,
     status_code=status.HTTP_200_OK,
     summary="Login a User",
-    tags=["User"]
+    tags=["Users"]
 )
-def login():
+def login(): 
     pass
 
-### Show all user
+### Show all users
 @app.get(
     path="/users",
     response_model=List[User],
     status_code=status.HTTP_200_OK,
-    summary="Show all User",
-    tags=["User"]
+    summary="Show all users",
+    tags=["Users"]
 )
-def show_all_user():
+def show_all_users(): 
     pass
 
-### show a user
+### Show a user
 @app.get(
-    path="/Users/{user_id}",
+    path="/users/{user_id}",
     response_model=User,
     status_code=status.HTTP_200_OK,
     summary="Show a User",
-    tags=["User"]
+    tags=["Users"]
 )
-def show_a_user():
+def show_a_user(): 
     pass
 
-### Delete a user 
+### Delete a user
 @app.delete(
     path="/users/{user_id}/delete",
     response_model=User,
     status_code=status.HTTP_200_OK,
     summary="Delete a User",
-    tags=["User"]
+    tags=["Users"]
 )
-def delete_a_user():
+def delete_a_user(): 
     pass
 
 ### Update a user
@@ -140,24 +151,24 @@ def delete_a_user():
     response_model=User,
     status_code=status.HTTP_200_OK,
     summary="Update a User",
-    tags=["User"]
+    tags=["Users"]
 )
-def update_a_user():
+def update_a_user(): 
     pass
 
 
 ## Tweets
 
-### Show all tweet
+### Show  all tweets
 @app.get(
-    path = '/', 
+    path="/",
     response_model=List[Tweet],
     status_code=status.HTTP_200_OK,
     summary="Show all tweets",
     tags=["Tweets"]
 )
 def home():
-    return {'Twitter API': 'Working!'}
+    return {"Twitter API": "Working!"}
 
 ### Post a tweet
 @app.post(
@@ -167,7 +178,7 @@ def home():
     summary="Post a tweet",
     tags=["Tweets"]
 )
-def post():
+def post(): 
     pass
 
 ### Show a tweet
@@ -178,27 +189,27 @@ def post():
     summary="Show a tweet",
     tags=["Tweets"]
 )
-def show_a_tweet():
+def show_a_tweet(): 
     pass
 
 ### Delete a tweet
 @app.delete(
-    path="/tweet/{tweet_id}/delete",
+    path="/tweets/{tweet_id}/delete",
     response_model=Tweet,
     status_code=status.HTTP_200_OK,
     summary="Delete a tweet",
     tags=["Tweets"]
 )
-def delete_a_tweet():
+def delete_a_tweet(): 
     pass
 
 ### Update a tweet
 @app.put(
-    path="/tweet/{tweet_id}/update",
+    path="/tweets/{tweet_id}/update",
     response_model=Tweet,
     status_code=status.HTTP_200_OK,
     summary="Update a tweet",
     tags=["Tweets"]
 )
-def update_a_tweet():
+def update_a_tweet(): 
     pass
