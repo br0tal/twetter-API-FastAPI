@@ -1,1 +1,54 @@
-[]
+[
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "This is the first tweet in the history",
+        "created_at": "2022-07-26 20:39:33.465950",
+        "updated_at": "None",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "pedro@example.com",
+            "first_name": "Pedro",
+            "last_name": "Calderon Pe\u00f1a",
+            "birth_date": "2022-07-27"
+        }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "content": "yo soy gru",
+        "created_at": "2022-07-26 21:05:09.964535",
+        "updated_at": "2022-07-27 02:05:54.679000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "pedro@example.com",
+            "first_name": "Pedro",
+            "last_name": "Calderon",
+            "birth_date": "2022-07-27"
+        }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+        "content": "Me voy de tweet",
+        "created_at": "2022-07-26 21:05:09.964535",
+        "updated_at": "2022-07-27 02:05:54.679000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "rocio@example.com",
+            "first_name": "Rocio",
+            "last_name": "Calderon",
+            "birth_date": "2022-07-27"
+        }
+    },
+    {
+        "tweet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa7",
+        "content": "Hoal soy nuevo en tweet",
+        "created_at": "2022-07-26 21:05:09.964535",
+        "updated_at": "2022-07-27 02:05:54.679000+00:00",
+        "by": {
+            "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "email": "juan@example.com",
+            "first_name": "Juan",
+            "last_name": "Calderon",
+            "birth_date": "2022-07-27"
+        }
+    }
+]
