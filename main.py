@@ -58,7 +58,7 @@ class Tweet(BaseModel):
         max_length=256
     )
     created_at: datetime = Field(default=datetime.now())
-    updated_at: Optional[datetime] = Field(default=datetime.now())
+    updated_at: Optional[datetime] = Field(default=None)
     by: User = Field(...)
 
 # Path Operations
@@ -76,18 +76,25 @@ class Tweet(BaseModel):
 def signup(user: UserRegister = Body(...)): 
     """
     Signup
-
+    
     This path operation register a user in the app
-
+    
     Parameters: 
+        
         - Request body parameter
+            
             - user: UserRegister
     
     Returns a json with the basic user information: 
+        
         - user_id: UUID
+        
         - email: Emailstr
+        
         - first_name: str
+        
         - last_name: str
+        
         - birth_date: datetime
     """
     with open("users.json", "r+", encoding="utf-8") as f: 
@@ -125,16 +132,22 @@ def show_all_users():
     This path operation shows all users in the app
     
     Parameters: 
-        - 
+        
+        -
     
-    Returns a json list with all users in the app, with the following keys:
+    Returns a json list with all users in the app, with the following keys: 
+        
         - user_id: UUID
+        
         - email: Emailstr
+        
         - first_name: str
+        
         - last_name: str
+        
         - birth_date: datetime
     """
-    with open("users.json", "r", encoding="utf8") as f:
+    with open("users.json", "r", encoding="utf-8") as f: 
         results = json.loads(f.read())
         return results
 
@@ -193,23 +206,30 @@ def home():
     summary="Post a tweet",
     tags=["Tweets"]
 )
-def post(tweet:Tweet = Body(...)): 
+def post(tweet: Tweet = Body(...)): 
     """
     Post a Tweet
-
+    
     This path operation post a tweet in the app
-
+    
     Parameters: 
+        
         - Request body parameter
+            
             - tweet: Tweet
     
     Returns a json with the basic tweet information: 
-        tweet_id: UUID
-        content: str 
-        created_at: datetime 
-        updated_at: Optional[datetime] 
-        by: User 
-        """
+        
+        - tweet_id: UUID  
+        
+        - content: str    
+        
+        - created_at: datetime
+        
+        - updated_at: Optional[datetime]
+        
+        - by: User
+    """
     with open("tweets.json", "r+", encoding="utf-8") as f: 
         results = json.loads(f.read())
         tweet_dict = tweet.dict()
@@ -218,6 +238,7 @@ def post(tweet:Tweet = Body(...)):
         tweet_dict["updated_at"] = str(tweet_dict["updated_at"])
         tweet_dict["by"]["user_id"] = str(tweet_dict["by"]["user_id"])
         tweet_dict["by"]["birth_date"] = str(tweet_dict["by"]["birth_date"])
+
         results.append(tweet_dict)
         f.seek(0)
         f.write(json.dumps(results))
